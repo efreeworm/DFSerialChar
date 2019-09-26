@@ -23,14 +23,14 @@ var canvas = document.getElementById('canvas'),
     GUIDEWIRE_FILL_STYLE = 'rgba(250, 250, 0, 0.6)',
     currentPostion = 0,
     x_rectangle = {
-        x: 20,
+        x: 70,
         width: 1800,
         y: 150,
         height: canvas.height / 3
     },
     circle = {
-        x: canvas.width / 1.4,
-        y: canvas.height / 2,
+        x: 80,
+        y: x_rectangle.y+x_rectangle.height/2,
         radius: 100
     };
 
@@ -64,8 +64,8 @@ class X_axis {
         x_axis.strokeStyle = TICK_SHORT_STROKE_STYLE;
         x_axis.beginPath();
         x_axis.setLineDash([]);
-        x_axis.moveTo(30 + width, x_rectangle.y);
-        x_axis.lineTo(30 + width, x_rectangle.y + tickWidth);
+        x_axis.moveTo(x_rectangle.x + width, x_rectangle.y);
+        x_axis.lineTo(x_rectangle.x + width, x_rectangle.y + tickWidth);
         x_axis.stroke();
     }
 
@@ -74,14 +74,15 @@ class X_axis {
      */
     static drawTicks() {
         var tickWidth = 5;
-
         x_axis.save();
-
-        for (var width = 0, cnt = 0; width < x_rectangle.width - 20; width += tickWidth, cnt++) {
+        for (var width = 0, cnt = 0; width < x_rectangle.width - x_rectangle.x; width += tickWidth, cnt++) {
             X_axis.drawTick(width, cnt++);
         }
-
         x_axis.restore();
+    }
+
+    static drawSlider() {
+
     }
 }
 
@@ -315,11 +316,9 @@ Y_axis.drawGrid('lightgray', 10, 10);
 X_axis.drawRectangle();
 //drawDial();
 //startRead();
-// setInterval(function () {
-//     context.clearRect(0, 0, canvas.width, canvas.height);
-//     drawGrid('lightgray', 10, 10);
-//     drawDial();
-// }, 10);
+setInterval(function () {
+    circle.x = (circle.x + 5) % 1700;
+}, 10);
 
 // 图表部分结束
 
