@@ -1,0 +1,33 @@
+<html>
+
+<head>
+   <title>A Dial Showing the Degrees of a Circle</title>
+   <script src="node_modules/jquery/dist/jquery.min.js"></script>
+   <style>
+      body {
+         background: #eeeeee;
+      }
+
+      #canvas {
+         background: #ffffff;
+         cursor: crosshair;
+         margin-left: 10px;
+         margin-top: 10px;
+         -webkit-box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.5);
+         -moz-box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.5);
+         box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.5);
+      }
+   </style>
+</head>
+
+<body>
+   <canvas id='canvas' width='650' height='450'>
+      Canvas not supported
+   </canvas>
+   <input type="text" id="snedTxt" />
+   <button id="sendb">发送</button>
+   <div id="recv"></div>
+   <script src='clock1example.js'></script>
+</body>
+
+</html>
