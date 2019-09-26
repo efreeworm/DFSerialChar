@@ -23,35 +23,65 @@ var canvas = document.getElementById('canvas'),
     GUIDEWIRE_FILL_STYLE = 'rgba(250, 250, 0, 0.6)',
     currentPostion = 0,
     x_rectangle = {
-        x: 100,
-        width: canvas.width / 3,
-        y: 100,
-        hight: canvas.height / 2 + 100
+        x: 20,
+        width: 1800,
+        y: 150,
+        height: canvas.height / 3
+    },
+    circle = {
+        x: canvas.width / 1.4,
+        y: canvas.height / 2,
+        radius: 100
     };
-circle = {
-    x: canvas.width / 1.6,
-    y: canvas.height / 2,
-    radius: 120
-};
 
 //X轴示意图
-class X_axis{
-    static drawRectangle(){
+class X_axis {
+    static drawDial() {
+        X_axis.drawRectangle();
+        X_axis.drawTicks();
+    }
+
+    static drawRectangle() {
         x_axis.beginPath();
         x_axis.save();
-        x_axis.strokeStyle = CENTROID_STROKE_STYLE;
-        x_axis.fillStyle = CENTROID_FILL_STYLE;
+        x_axis.strokeStyle = 'rgba(0, 0, 0, 0.1)';
+        //x_axis.strokeStyle = CENTROID_STROKE_STYLE;
+        // x_axis.fillStyle = CENTROID_FILL_STYLE;
         x_axis.fillRect(x_rectangle.x, x_rectangle.y, x_rectangle.width, x_rectangle.height);
-        x_axis.stroke();
+        x_axis.strokeRect(x_rectangle.x, x_rectangle.y, x_rectangle.width, x_rectangle.height);
         x_axis.fill();
         x_axis.restore();
-        // x_axis.fillStyle = '#eeeeff';
-        // x_axis.fillRect(0, 0, 400, 300);
-        // x_axis.fillStyle = 'red';
-        // x_axis.strokeStyle = 'blue';
-        // x_axis.lineWidth = 1;
-        // x_axis.fillRect(50, 50, 100, 100);
-        // x_axis.strokeRect(50, 50, 100, 100);
+    }
+
+    /**
+     * 绘制刻度
+     * @param {*} cnt 
+     */
+    static drawTick(width, cnt) {
+        var tickWidth = cnt % 5 === 0 ? TICK_WIDTH : TICK_WIDTH / 2;
+        //console.log(tickWidth,width)
+        x_axis.lineWidth = cnt % 5 === 0 ? 1.5 : 1;
+        x_axis.strokeStyle = TICK_SHORT_STROKE_STYLE;
+        x_axis.beginPath();
+        x_axis.setLineDash([]);
+        x_axis.moveTo(30 + width, x_rectangle.y);
+        x_axis.lineTo(30 + width, x_rectangle.y + tickWidth);
+        x_axis.stroke();
+    }
+
+    /**
+     * 绘制刻度
+     */
+    static drawTicks() {
+        var tickWidth = 5;
+
+        x_axis.save();
+
+        for (var width = 0, cnt = 0; width < x_rectangle.width - 20; width += tickWidth, cnt++) {
+            X_axis.drawTick(width, cnt++);
+        }
+
+        x_axis.restore();
     }
 }
 
@@ -312,7 +342,7 @@ ws.onmessage = function (e) { // onmessage 接收到信息触发  //
     context.clearRect(0, 0, canvas.width, canvas.height);
     Y_axis.drawGrid('lightgray', 10, 10);
     Y_axis.drawDial();
-    X_axis.drawRectangle();
+    X_axis.drawDial();
 }
 document.getElementById("sendb").onclick = function () { // 监测 id=“sendb”的 按钮 触发 onclick 就会发送数据 send //
     var txt = document.getElementById("snedTxt").value;
