@@ -9,7 +9,7 @@
   "author": "Rex Xia",
   "license": "ISC",
   "dependencies": {
-    "bootstrap": "^3.3.6",
+    "bootstrap": "^3.4.1",
     "jquery": "^1.11.3",
     "serialport": "^2.0.6",
     "ws": "^7.1.2"
